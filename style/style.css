@@ -64,6 +64,7 @@ nav ul li a {
 main {
     background-color: #EDEBE7;
     width: 100%;
+    min-height: 500px;
     margin: 0;
     padding: 0;
     display: flex;
