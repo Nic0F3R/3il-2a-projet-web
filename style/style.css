@@ -102,7 +102,7 @@ footer {
 
 .contenuFooter {
     background-color: #5c5c5c;
-    width: 100%;
+    width: 80%;
     margin: 0;
     padding-inline: 10%;
     display: flex;
@@ -114,11 +114,70 @@ footer {
 /* ---- FIN FOOTER ---- */
 
 
-.lien {
+.lienMenu {
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: color 0.4s;
+}
+
+.lienMenu:hover {
+    color: #D1FFBD;
     text-decoration: none;
 }
 
 .lien2 {
     text-decoration: none;
     color: #D1FFBD;
+}
+
+
+/* ---- CARROUSEL ---- */
+.carousel-container-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel-container {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-slide {
+    flex: 0 0 100%;
+    position: relative;
+}
+
+.image-container {
+    width: 600px; /* Largeur fixe de l'image */
+    height: 400px; /* Hauteur fixe de l'image */
+    overflow: hidden;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Remplir l'image dans le conteneur tout en préservant son ratio */
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 20px 10px;
+    background-color: #333333;
+    color: #FFFFFF;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+#prevBtn {
+    left: 0;
+}
+
+#nextBtn {
+    right: 0;
 }
