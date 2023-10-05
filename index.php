@@ -36,6 +36,39 @@ session_start();
 
                     <div class="carousel-container">
 
+                        <script>
+
+                            // Récupération des images dans le dossier images/carrousel
+
+                            const cheminDossierImages = "images/carrousel/";
+
+                            const extensionsAutorisees = [".jpg", ".jpeg", ".png"];
+
+                            // Utilisation de la fonction fetch pour obtenir la liste des fichiers dans le dossier
+                            fetch(cheminDossierImages).then(response => response.text()).then(text => {
+                                // Analyser le texte HTML de la réponse pour extraire les noms de fichiers
+                                const parser = new DOMParser();
+                                const htmlDocument = parser.parseFromString(text, "text/html");
+                                const elementsA = htmlDocument.querySelectorAll("a");
+
+                                // Parcourir les liens trouvés dans le dossier
+                                elementsA.forEach(elementA => {
+                                    const href = elementA.getAttribute("href");
+                                    
+                                    // Vérifier si l'extension du fichier est autorisée
+                                    if(extensionsAutorisees.includes(getFileExtension(href))) {
+                                        console.log(href); // Afficher le nom de l'image
+                                    }
+                                });
+                            }).catch(error => console.error(error));
+
+                            // Fonction pour obtenir l'extension d'un fichier
+                            function getFileExtension(filename) {
+                                return filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2);
+                            }
+                            
+                        </script>
+
                         <div class="carousel-slide">
                             <div class="image-container">
                                 <img src="images/carrousel/figuies-1.jpg" alt="Image du gîte Figuiès">

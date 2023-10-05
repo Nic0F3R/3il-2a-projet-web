@@ -1,6 +1,7 @@
 <?php
 session_start();
 ?>
+
 <nav>
 
     <ul>
@@ -11,8 +12,11 @@ session_start();
                 echo '<li><a href="" class="lienMenu">Réserver</a></li>';
                 echo '<li><a href="contact.php" class="lienMenu">Contact</a></li>';
             }
-            
+
             if($_SESSION['isAdmin']) {
+                echo '<li><a href="photos.php" class="lienMenu">Photos</a></li>';
+                echo '<li><a href="reservations.php" class="lienMenu">Réservations</a></li>';
+                echo '<li><a href="messagerie.php" class="lienMenu">Messagerie</a></li>';
                 echo "<li><a href='deconnexion.php' class='lienMenu'>Déconnexion</a></li>";
             }
         ?>
