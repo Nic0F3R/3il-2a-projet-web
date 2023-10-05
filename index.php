@@ -7,22 +7,11 @@
     </head>
     <body>
 
-        <header>
-            <img src="images/logo.png" class="logo" />
-            <h1>Gîte Figuiès</h1>
-        </header>
+        <?php
+            include "assets/header.html";
 
-        <nav>
-
-            <ul>
-                <li><a href="" class="lienMenu">Accueil</a></li>
-                <li><a href="" class="lienMenu">Réserver</a></li>
-                <li><a href="" class="lienMenu">Contact</a></li>
-            </ul>
-
-            <button class="menu-toggle">☰</button>
-
-        </nav>
+            include "assets/menu.html";
+        ?>
 
         <main>
 
@@ -174,19 +163,9 @@
             </section>
         </main>
 
-        <footer>
-            <p class="copyright">&copy; 2023 - Gîte Figuiès - Tous droits réservés -&nbsp;<a href="" class="lien2">Mentions légales</a></p>
-        </footer>
-
-        <div class="contenuFooter">
-            <p>
-                Figuiès<br />
-                140 rue de Figuiès<br />
-                12330 Salles-la-Source<br /><br />
-
-                <a href="" class="lien2">Administration</a>
-            </p>
-        </div>
+        <?php
+            include "assets/footer.html";
+        ?>
 
 
 
