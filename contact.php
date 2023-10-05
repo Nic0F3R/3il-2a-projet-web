@@ -16,6 +16,7 @@
 
         <main>
 
+
             <section>
 
                 <h2>Bienvenue sur le site du gîte Figuiès</h2>
