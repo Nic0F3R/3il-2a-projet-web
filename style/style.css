@@ -63,6 +63,51 @@ nav ul li {
 nav ul li a {
     color: #FFFFFF;
 }
+
+.menu-toggle {
+    display: none;
+    background-color: #333333;
+    border: none;
+    color: #FFFFFF;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+
+    nav ul {
+        flex-direction: column;
+        text-align: center;
+        position: absolute;
+
+        align-items: center;
+        justify-content: center;
+
+        top: 100px;
+        left: 0;
+        right: 0;
+        background-color: #5c5c5c;
+        display: none;
+        padding-bottom: 10px;
+    }
+
+    nav ul.active {
+        display: flex;
+    }
+
+    nav li {
+        /*margin: 0px;*/
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 0;
+    }
+
+    .menu-toggle {
+        display: block; /* Afficher le menu hamburger lorsque la fenêtre est trop petite */
+        position: absolute;
+        right: 20px;
+    }
+}
 /* ---- FIN MENU ---- */
 
 /* ---- MAIN ---- */

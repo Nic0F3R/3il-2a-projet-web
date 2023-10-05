@@ -20,6 +20,8 @@
                 <li><a href="" class="lienMenu">Contact</a></li>
             </ul>
 
+            <button class="menu-toggle">☰</button>
+
         </nav>
 
         <main>
@@ -70,7 +72,7 @@
                 <h3>À partir de 550€ / semaine</h3>
 
                 <p>
-                    À 20 mn de Rodez, 10 mn de Marcillac et 30 mn de Conques, vous êtes <strong>idéalement situés pour visiter</strong> quelques un des sites naturels ou culturels remarquables de l'Aveyron.
+                    À 20 minutes de Rodez, 10 minutes de Marcillac et 30 mn de Conques, vous êtes <strong>idéalement situés pour visiter</strong> quelques un des sites naturels ou culturels remarquables de l'Aveyron.
                     <br /><br />
                     Figuies est un hameau charmant, que l'on visite à pied. Une belle balade par un chemin, vous mènera de la cascade de la Roque, à celles de Salles-la source, en profitant de nombreux points de vue sur le paysage. On adore aussi le sentier à flanc de versant avec des passages en encorbellement creusé dans la roche ! Il nous fait pénétrer dans le paysage des falaises calcaires avec de beaux points de vue sur la vallée.  Vous êtes sur le GR 62 de Rodez à Conques.
                     <br /><br />
@@ -190,6 +192,21 @@
 
         <script>
 
+            // ---- MENU RESPONSIVE ---- //
+            document.addEventListener("DOMContentLoaded", function () {
+
+                const menuToggle = document.querySelector(".menu-toggle");
+                const navList = document.querySelector("nav ul");
+
+                menuToggle.addEventListener("click", function () {
+                    navList.classList.toggle("active");
+                });
+                
+            });
+            // ---- FIN MENU RESPONSIVE ---- //
+
+
+            // ---- CARROUSEL ---- //
             const carouselContainer = document.querySelector('.carousel-container');
             const slides = document.querySelectorAll('.carousel-slide');
             const prevBtn = document.getElementById('prevBtn');
@@ -227,6 +244,10 @@
             prevBtn.addEventListener('click', prevSlide);
 
             showSlide(currentIndex);
+
+            // ---- FIN CARROUSEL ---- //
+
+
 
         </script>
 
