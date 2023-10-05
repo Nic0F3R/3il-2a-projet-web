@@ -1,41 +1,54 @@
 <?php
 
+session_start();
+
 include "db/config.php";
 
 $erreur = "";
 
-if(!empty($_POST['login'])) {
+if(isset($_POST['submit'])) {
 
-    if(!empty($_POST['mdp'])) {
+    if(!empty($_POST['login'])) {
 
-        $login = htmlspecialchars(htmlentities($_POST['login']));
-        $mdp = htmlspecialchars(htmlentities($_POST['mdp']));
+        if(!empty($_POST['mdp'])) {
 
-
-        $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
-
-        try {
-            $pdo = new PDO($dsn, $user, $password);
-
-            $req = "SELECT * FROM ComptesAdmin WHERE login='" . $login . "' AND mdp='" . $mdp . "';";
-
-            $res = $pdo->query($req);
-
-            $nbComptesAdmin = $res->fetchColumn();
+            $login = htmlspecialchars(htmlentities($_POST['login']));
+            $mdp = htmlspecialchars(htmlentities($_POST['mdp']));
 
 
+            $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
+
+            try {
+
+                $pdo = new PDO($dsn, $user, $password);
+
+                $req = "SELECT * FROM ComptesAdmin WHERE login='" . $login . "' AND mdp='" . $mdp . "';";
+
+                $res = $pdo->query($req);
+
+                $nbComptesAdmin = $res->fetchColumn();
+
+                if($nbComptesAdmin == 1) {
+
+                    $_SESSION['isAdmin'] = true;
+
+                    header('Location:index.php');
+
+                } else {
+                    $erreur = "Identifiant et/ou mot de passe incorrect(s)";
+                }
+                
+            } catch (PDOException $e) {
+                $erreur = "Erreur de connexion. Veuillez contacter le webmaster -> " . $e;
+            }
             
-        } catch (PDOException $e) {
-            $erreur = "Erreur de connexion. Veuillez contacter le webmaster";
+        } else {
+            $erreur = "Le mot de passe est obligatoire";
         }
-        
-
-
     } else {
-        $erreur = "Le mot de passe est obligatoire";
+        $erreur = "L'identifiant est obligatoire";
     }
-} else {
-    $erreur = "L'identifiant est obligatoire";
+
 }
 
 
@@ -52,7 +65,7 @@ if(!empty($_POST['login'])) {
 
         <?php
             include "assets/header.html";
-            include "assets/menu.html";
+            include "assets/menu.php";
         ?>
 
         <main>
@@ -70,11 +83,11 @@ if(!empty($_POST['login'])) {
                         <label for="mdp">Mot de passe :</label>
                         <input type="password" name="mdp"><br /><br />
 
-                        <input type="submit" value="Connexion"><br /><br />
+                        <input type="submit" name="submit" value="Connexion"><br /><br />
                     </form>
 
                     <?php
-                        if(isset($erreur)) {
+                        if(!empty($erreur)) {
                             echo "<strong><font color='red'>" . $erreur . "</font></strong>";
                         }
                     ?>

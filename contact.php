@@ -32,7 +32,7 @@
         <?php
             include "assets/header.html";
 
-            include "assets/menu.html";
+            include "assets/menu.php";
         ?>
 
         <main>

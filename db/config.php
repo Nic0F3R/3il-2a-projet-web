@@ -3,6 +3,6 @@
 $host = 'localhost';
 $db = 'GiteFiguies';
 $user = 'root';
-$password = '!';
+$password = '';
 
 ?>

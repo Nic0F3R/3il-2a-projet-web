@@ -1,3 +1,9 @@
+<?php
+
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
     <head>
@@ -10,7 +16,7 @@
         <?php
             include "assets/header.html";
 
-            include "assets/menu.html";
+            include "assets/menu.php";
         ?>
 
         <main>
