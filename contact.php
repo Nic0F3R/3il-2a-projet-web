@@ -10,6 +10,17 @@ session_start();
     <link rel="stylesheet" href="style/style.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
     <style>
+<style>
+    #photo1 {
+        width: 100px;
+        height: 100px; 
+    }
+
+    #photo2 {
+        width: 200px;
+        height: 200px; 
+    }
+    
         .centered-content {
             text-align: center;
             padding-top: 100px;
@@ -25,6 +36,7 @@ session_start();
             margin:25px 300px 200px;
         }
     </style>
+
 </head>
 <body>
 
@@ -42,7 +54,7 @@ include "assets/menu.php";
             </div>
             <div class="centered-content">
         <figure>
-            <img src="/images/Contact /chemin_vers_image.jpg" alt="Horraire d'ouverture" />
+            <img src="images\Contact\chemin_vers_image.png" alt="Horraire d'ouverture" id="photo1"/>
 
             <figcaption>Ouvert toute l'année
                 <br>
@@ -51,7 +63,7 @@ include "assets/menu.php";
         </figure>
 
         <figure>
-            <img src="chemin_vers_image.jpg" alt="Echangeons" />
+            <img src="images\Contact\Echange d'information.png" alt="Echangeons" id="photo2"/>
 
             <figcaption>
                 <br>
@@ -62,7 +74,7 @@ include "assets/menu.php";
         </figure>
 
         <figure>
-            <img src="chemin_vers_image.jpg" alt="Demande d'information" />
+            <img src="images\Contact\Heure d'ouverture.png" alt="Demande d'information" />
             <figcaption>
                 <br>
                 <br>
