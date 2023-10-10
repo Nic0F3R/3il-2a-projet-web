@@ -17,7 +17,7 @@ session_start();
                 echo '<li><a href="photos.php" class="lienMenu">Photos</a></li>';
                 echo '<li><a href="reservations.php" class="lienMenu">Réservations</a></li>';
                 echo '<li><a href="messagerie.php" class="lienMenu">Messagerie</a></li>';
-                echo "<li><a href='deconnexion.php' class='lienMenu'>Déconnexion</a></li>";
+                echo '<li><a href="deconnexion.php" class="lienMenu"><font color="#FFCCCB">Déconnexion</font></a></li>';
             }
         ?>
     </ul>
