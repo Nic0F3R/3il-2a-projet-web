@@ -1,5 +1,13 @@
 <?php
-//session_start();
+
+try {
+    if(empty($_SESSION['isAdmin'])) {
+        session_start();
+    }
+} catch(Exception $e) {
+    // todo
+}
+
 ?>
 
 <nav>
