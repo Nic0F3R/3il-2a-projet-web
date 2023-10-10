@@ -194,8 +194,6 @@ session_start();
             include "assets/footer.html";
         ?>
 
-
-
         <script>
 
             // ---- MENU RESPONSIVE ---- //
@@ -252,8 +250,6 @@ session_start();
             showSlide(currentIndex);
 
             // ---- FIN CARROUSEL ---- //
-
-
 
         </script>
 

@@ -2,6 +2,9 @@
 
 session_start();
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if(!($_SESSION['isAdmin'])) {
     header('Location:index.php');
 }
@@ -9,8 +12,45 @@ if(!($_SESSION['isAdmin'])) {
 include "db/config.php";
 
 $erreur = "";
+$msgOK = "";
 
+if(isset($_POST['submit'])) {
 
+    $msgOK = "";
+
+    if(!empty($_FILES['fichier']['name'])) {
+
+        $dossier_destination = 'images/carrousel/';
+        $nom_fichier = $_FILES["fichier"]["name"];
+        $chemin_temporaire = $_FILES["fichier"]["tmp_name"];
+        $chemin_fichier = $dossier_destination . $nom_fichier;
+        $tailleFichier = $_FILES['fichier']['size'];
+
+        $tabExtension = explode('.', $nom_fichier);
+        $extension = strtolower(end($tabExtension));
+
+        $extensions = ['jpg', 'png', 'jpeg', 'gif'];
+
+        // Vérification de l'extension du fichier
+        if(in_array($extension, $extensions)) {
+
+            if(move_uploaded_file($chemin_temporaire, $chemin_fichier)) {
+
+                $msgOK = "L'image $nom_fichier a été téléchargée";
+
+            } else {
+                $erreur = "Erreur lors du téléchargement du fichier";
+            }
+
+        } else {
+            $erreur = "Le fichier sélectionné doit être une image (jpg, jpeg, png, gif)";
+        }
+        
+    } else {
+        $erreur = "Veuillez sélectionner un fichier";
+    }
+
+}
 
 ?>
 
@@ -34,27 +74,39 @@ $erreur = "";
 
                 <h2>Gestion des photos - Administration</h2>
 
+                <h3>Télécharger des photos</h3>
+
                 <p>
 
-                    <form action="" method="POST">
-                        <label for="login">Identifiant :</label>
-                        <input type="text" name="login"><br />
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        <label for="fichier">Sélectionner une image :</label>
 
-                        <label for="mdp">Mot de passe :</label>
-                        <input type="password" name="mdp"><br /><br />
+                        <input type="file" name="fichier"><br /><br />
 
-                        <input type="submit" name="submit" value="Connexion"><br /><br />
+                        <input type="submit" name="submit" value="Télécharger"><br /><br />
                     </form>
 
                     <?php
+
                         if(!empty($erreur)) {
                             echo "<strong><font color='red'>" . $erreur . "</font></strong>";
                         }
+
+                        if(!empty($msgOK)) {
+                            echo "<strong><font color='#008000'>" . $msgOK . "</font></strong>";
+                        }
+
                     ?>
 
                 </p>
 
-                <br /><br />
+                <br /><hr />
+
+                <h3>Visualiser / supprimer des photos</h3>
+
+                <p>
+
+                </p>
 
             </section>
         </main>
@@ -62,8 +114,6 @@ $erreur = "";
         <?php
             include "assets/footer.html";
         ?>
-
-
 
         <script>
 
