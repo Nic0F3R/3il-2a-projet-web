@@ -2,10 +2,10 @@
 
 try {
     if(empty($_SESSION['isAdmin'])) {
-        session_start();
+        $_SESSION['isAdmin'] = false;
     }
 } catch(Exception $e) {
-    // todo
+    session_start();
 }
 
 ?>
