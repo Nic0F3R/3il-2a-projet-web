@@ -2,7 +2,7 @@
 
 session_start();
 
-if(!($_SESSION['isAdmin'])) {
+if($_SESSION['isAdmin'] != true) {
     header('Location:index.php');
 }
 

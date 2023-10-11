@@ -5,7 +5,7 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if(!($_SESSION['isAdmin'])) {
+if($_SESSION['isAdmin'] != true) {
     header('Location:index.php');
 }
 
@@ -106,6 +106,23 @@ if(isset($_POST['submit'])) {
 
                 <p>
 
+                    <?php
+                        // Affichage de toutes les images dans le dossier carrousel
+
+                        $scandir = scandir("./images/carrousel/");
+
+                        foreach($scandir as $fichier) {
+
+                            // Filtre les images avec une regex
+                            if(preg_match("#\.(jpg|jpeg|png|gif|bmp|tif)$#", strtolower($fichier))) {
+                                $baliseImage = "<div class='container-photo-btn'><img src='images/carrousel/$fichier' alt='Image du gîte Figuiès' id='$fichier'><button type='button' class='btn-supprimer-image' id='$fichier'>X</button></div><br /><br/>";
+                                echo $baliseImage;
+                            }
+
+                        }
+
+                    ?>
+
                 </p>
 
             </section>
@@ -129,6 +146,37 @@ if(isset($_POST['submit'])) {
                 
             });
             // ---- FIN MENU RESPONSIVE ---- //
+
+
+            // ---- SUPPRESSION DES PHOTOS ---- //
+            var btnSupprimerClass = document.querySelectorAll('.btn-supprimer-image');
+            
+            btnSupprimerClass.forEach(function(bouton) {
+
+                bouton.addEventListener('click', function() {
+
+                    var btnSupprId = bouton.id;
+                
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "supprimerImg.php", true);
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === 4) {
+                            if (xhr.status === 200) {
+                                // Image supprimée
+                                window.location.href = window.location.href;
+                            }
+                        }
+                    };
+
+                    xhr.send("idImgASuppr=" + btnSupprId);
+                    
+                });
+                
+            });
+
+            // ---- FIN SUPPRESSION DES PHOTOS ---- //
 
         </script>
 

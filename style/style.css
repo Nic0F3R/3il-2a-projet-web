@@ -226,3 +226,38 @@ footer {
 #nextBtn {
     right: 0;
 }
+
+
+/* ---- GESTION DES PHOTOS ---- */
+.container-photo-btn {
+    width: 350px;
+    height: auto;
+    padding: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-photo-btn img {
+    width: 300px;
+    height: auto;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+}
+
+.container-photo-btn button {
+    background-color: #8b0000;
+    color: #FFFFFF;
+    border: none;
+    font-size: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* ---- FIN DES GESTION DES PHOTOS ---- */
