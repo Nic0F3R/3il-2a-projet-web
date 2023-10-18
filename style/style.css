@@ -261,3 +261,36 @@ footer {
 }
 
 /* ---- FIN DES GESTION DES PHOTOS ---- */
+
+/* ---- MESSAGERIE ---- */
+.container-message-btn {
+    width: 600px;
+    height: auto;
+    padding: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-message-btn .message {
+    width: 550px;
+    height: auto;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+}
+
+.container-message-btn button {
+    background-color: #8b0000;
+    color: #FFFFFF;
+    border: none;
+    font-size: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+/* ---- FIN MESSAGERIE ---- */

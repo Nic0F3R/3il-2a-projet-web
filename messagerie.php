@@ -2,6 +2,9 @@
 
 session_start();
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if($_SESSION['isAdmin'] != true) {
     header('Location:index.php');
 }
@@ -10,8 +13,7 @@ include "db/config.php";
 
 $erreur = "";
 
-
-
+$dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
 
 ?>
 
@@ -37,19 +39,42 @@ $erreur = "";
 
                 <p>
 
-                    <form action="" method="POST">
-                        <label for="login">Identifiant :</label>
-                        <input type="text" name="login"><br />
-
-                        <label for="mdp">Mot de passe :</label>
-                        <input type="password" name="mdp"><br /><br />
-
-                        <input type="submit" name="submit" value="Connexion"><br /><br />
-                    </form>
-
                     <?php
-                        if(!empty($erreur)) {
-                            echo "<strong><font color='red'>" . $erreur . "</font></strong>";
+
+                        try {
+
+                            $pdo = new PDO($dsn, $user, $password);
+                            $req = "SELECT * FROM Message ORDER BY id DESC;";
+
+                            $stmt = $pdo->prepare($req);
+                            $stmt->execute();
+
+                            $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                            if (count($res) > 0) {
+
+                                foreach ($res as $row) {
+
+                                    //echo 'test';
+
+                                    echo '<div class="container-message-btn">
+                                            <div class="message" id="' . $row['id'] . '">
+                                                <strong>Expéditeur :</strong> ' . $row['nom'] . ' ' . $row['prenom'] . ' - ' . $row['email'] . '<br /><br /><strong>Message</strong> :<br />' . $row['message'] .
+                                            '</div>
+                                            <button type="button" class="btn-supprimer-message" id="' . $row['id'] . '">X</button>
+                                          </div><hr /><br />';
+                            
+                                }
+
+                            } else {
+                                echo "Aucun message à afficher";
+                            }
+
+
+
+                        } catch(PDOException $e) {
+
+                            echo "<strong><font color='red'>Erreur lors de la réception des messages</font></strong>";
                         }
                     ?>
 
@@ -80,6 +105,39 @@ $erreur = "";
                 
             });
             // ---- FIN MENU RESPONSIVE ---- //
+
+
+            // ---- SUPPRESSION DES MESSAGES ---- //
+            var btnSupprimerClass = document.querySelectorAll('.btn-supprimer-message');
+            
+            btnSupprimerClass.forEach(function(bouton) {
+
+                bouton.addEventListener('click', function() {
+
+                    var btnSupprId = bouton.id;
+
+                    console.log('ici');
+                
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "supprimerMessage.php", true);
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === 4) {
+                            if (xhr.status === 200) {
+                                // Message supprimé
+                                window.location.href = window.location.href;
+                            }
+                        }
+                    };
+
+                    xhr.send("idMessageASuppr=" + btnSupprId);
+                    
+                });
+                
+            });
+
+            // ---- FIN SUPPRESSION DES MESSAGES ---- //
 
         </script>
 

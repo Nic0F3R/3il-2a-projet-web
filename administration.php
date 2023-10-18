@@ -43,7 +43,7 @@ if(isset($_POST['submit'])) {
                 }
                 
             } catch (PDOException $e) {
-                $erreur = "Erreur de connexion. Veuillez contacter le webmaster -> " . $e;
+                $erreur = "Erreur de connexion. Veuillez contacter le webmaster";
             }
             
         } else {

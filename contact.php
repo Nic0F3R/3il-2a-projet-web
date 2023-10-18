@@ -1,126 +1,172 @@
 <?php
+
 session_start();
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+if($_SESSION['isAdmin']) {
+    header('Location:index.php');
+}
+
+include "db/config.php";
+
+$erreur = "";
+$msgOK = "";
+
+if(isset($_POST['submit'])) {
+
+    $msgOK = "";
+
+    if(!empty($_POST['nom']) && strlen($_POST['nom']) < 50) {
+
+        if(!empty($_POST['prenom']) && strlen($_POST['prenom']) < 50) {
+
+            if(!empty($_POST['email']) && strlen($_POST['email']) < 100) {
+
+                if(!empty($_POST['objet']) && strlen($_POST['objet']) < 100) {
+
+                    if(!empty($_POST['message'])) {
+    
+                        if(strlen($_POST['message']) > 20  && strlen($_POST['message']) < 2000) {
+    
+                            $nom = htmlspecialchars($_POST['nom']);
+                            $prenom = htmlspecialchars($_POST['prenom']);
+                            $email = htmlspecialchars($_POST['email']);
+                            $objet = htmlspecialchars($_POST['objet']);
+                            $message = htmlspecialchars($_POST['message']);
+    
+                            $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
+
+                            try {
+
+                                $pdo = new PDO($dsn, $user, $password);
+                
+                                $req = "INSERT INTO Message (nom, prenom, email, objet, message) VALUES (:nom, :prenom, :email, :objet, :message);";
+                
+                                $res = $pdo->prepare($req);
+    
+                                $res->bindParam(':nom', $nom);
+                                $res->bindParam(':prenom', $prenom);
+                                $res->bindParam(':email', $email);
+                                $res->bindParam(':objet', $objet);
+                                $res->bindParam(':message', $message);
+
+                                $res->execute();
+
+                                $msgOK = "Votre message a été envoyée. Vous recevrez une réponse par mail";
+                
+                            } catch (PDOException $e) {
+                                $erreur = "Erreur lors de l'envoi du message";
+                            }
+
+                        } else {
+                            $erreur = "Veuillez saisir un message cohérent";
+                        }
+    
+                    } else {
+                        $erreur = "Le contenu du message est obligatoire";
+                    }
+    
+                } else {
+                    $erreur = "L'objet du message est obligatoire";
+                }
+
+            } else {
+                $erreur = "L'adresse E-Mail est obligatoire";
+            }
+
+        } else {
+            $erreur = "Le prénom est obligatoire";
+        }
+
+    } else {
+        $erreur = "Le nom est obligatoire";
+    }
+
+}
+
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <title>Gîte Figuiès</title>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="style/style.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
-    <style>
-<style>
-    #photo1 {
-        width: 100px;
-        height: 100px; 
-    }
+    <head>
+        <title>Gîte Figuiès - Contact</title>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="style/style.css" />
+    </head>
+    <body>
 
-    #photo2 {
-        width: 200px;
-        height: 200px; 
-    }
-    
-        .centered-content {
-            text-align: center;
-            padding-top: 100px;
-        }
+        <?php
+            include "assets/header.html";
 
-        .centered-content figure {
-            display: inline-block;
-            margin: 10px;
-        }
+            include "assets/menu.php";
+        ?>
 
-        #map {
-            height: 400px;
-            margin:25px 300px 200px;
-        }
-    </style>
+        <main>
 
-</head>
-<body>
+            <section>
 
-<?php
-include "assets/header.html";
-include "assets/menu.php";
-?>
+                <h2>Formulaire de contact</h2>
 
-<main>
-    <section>
-        <h2>Nous Contacter</h2>
-        <p>
-            <div id="map">
-                <!-- Ici s'affichera la carte -->
-            </div>
-            <div class="centered-content">
-        <figure>
-            <img src="images\Contact\chemin_vers_image.png" alt="Horraire d'ouverture" id="photo1"/>
+                <p>
 
-            <figcaption>Ouvert toute l'année
-                <br>
-                <br>
-                De 8h à 12 h et de 14 à 19 h</figcaption>
-        </figure>
+                    <form action="" method="POST">
+                        <label for="nom">Nom :</label><br />
+                        <input type="text" name="nom"><br /><br />
 
-        <figure>
-            <img src="images\Contact\Echange d'information.png" alt="Echangeons" id="photo2"/>
+                        <label for="prenom">Prénom :</label><br />
+                        <input type="text" name="prenom"><br /><br />
 
-            <figcaption>
-                <br>
-                0586966435 
-                <br>
-                0686945757
-            </figcaption>
-        </figure>
+                        <label for="email">E-Mail :</label><br />
+                        <input type="text" name="email"><br /><br />
 
-        <figure>
-            <img src="images\Contact\Heure d'ouverture.png" alt="Demande d'information" />
-            <figcaption>
-                <br>
-                <br>
-                <br>
-            </figcaption>
-        </figure>
-    </div>
-        </p>
-    </section>
-</main>
+                        <label for="objet">Objet :</label><br />
+                        <input type="text" name="objet"><br /><br />
 
-<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
-        integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
-        crossorigin=""></script>
-<script type="text/javascript">
-    // On initialise la latitude et la longitude du nouvel emplacement
-    var lat = 44.449083;
-    var lon = 2.493333;
-    var macarte = null;
+                        <label for="message">Message :</label><br />
+                        <textarea name="message" rows="10" cols="50"></textarea><br /><br />
 
-    // Fonction d'initialisation de la carte
-    function initMap() {
-        // Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
-        macarte = L.map('map').setView([lat, lon], 11);
+                        <input type="submit" name="submit" value="Envoyer"><br /><br />
+                    </form>
 
-        // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
-        L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-            // Il est toujours bien de laisser le lien vers la source des données
-            attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
-            minZoom: 1,
-            maxZoom: 20
-        }).addTo(macarte);
+                    <?php
+                        if(!empty($erreur)) {
+                            echo "<strong><font color='red'>" . $erreur . "</font></strong>";
+                        }
 
-        // Nous ajoutons un marqueur
-        var marker = L.marker([lat, lon]).addTo(macarte);
-    }
+                        if(!empty($msgOK)) {
+                            echo "<strong><font color='#008000'>" . $msgOK . "</font></strong>";
+                        }
+                    ?>
 
-    window.onload = function () {
-        // Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
-        initMap();
-    };
-</script>
+                </p>
 
-<?php
-include "assets/footer.html";
-?>
+                <br /><br />
 
-</body>
+            </section>
+        </main>
+
+        <?php
+            include "assets/footer.html";
+        ?>
+
+        <script>
+
+            // ---- MENU RESPONSIVE ---- //
+            document.addEventListener("DOMContentLoaded", function () {
+
+                const menuToggle = document.querySelector(".menu-toggle");
+                const navList = document.querySelector("nav ul");
+
+                menuToggle.addEventListener("click", function () {
+                    navList.classList.toggle("active");
+                });
+                
+            });
+            // ---- FIN MENU RESPONSIVE ---- //
+
+        </script>
+
+    </body>
 </html>
