@@ -17,7 +17,7 @@ try {
 
         <?php
             if($_SESSION['isAdmin'] != true) {
-                echo '<li><a href="" class="lienMenu">Réserver</a></li>';
+                echo '<li><a href="reserver.php" class="lienMenu">Réserver</a></li>';
                 echo '<li><a href="contact.php" class="lienMenu">Contact</a></li>';
             }
 

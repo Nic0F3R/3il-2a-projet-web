@@ -10,8 +10,14 @@ ini_set('display_errors', 1);
 <!DOCTYPE html>
 <html lang="fr">
     <head>
-        <title>Gîte Figuiès</title>
+        <title>Gîte Figuiès - Accueil</title>
         <meta charset="UTF-8" />
+
+        <meta name="description" content="Gîte Figuiès - Magnifique maison en pierre, située en Aveyron à Salle-la-Source, sur les hauteurs, entre vignes, falaises et le causse, possédant une vue magnifique et un environnement agréable. Disponible à la location toute l'année" />
+		<meta name="keywords" content="Figuiès, Figuies, gîte, gite, maison, location, Aveyron, Salle-la-Source"/>
+		<meta name="author" content="Gîte Figuiès" />
+		<meta name="copyright" content="Gîte Figuiès" />
+
         <link rel="stylesheet" href="style/style.css" />
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
     </head>
@@ -280,7 +286,7 @@ ini_set('display_errors', 1);
 
             var lat = 44.449083;
             var lon = 2.493333;
-            
+
             var macarte = null;
             
             function initMap() {

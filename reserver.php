@@ -91,10 +91,10 @@ if(isset($_POST['submit'])) {
 <!DOCTYPE html>
 <html lang="fr">
     <head>
-        <title>Gîte Figuiès - Formulaire de Contact</title>
+        <title>Gîte Figuiès - Réservation</title>
         <meta charset="UTF-8" />
 
-        <meta name="description" content="Gîte Figuiès - Formulaire de Contact" />
+        <meta name="description" content="Gîte Figuiès - Calendrier et Formulaire de Réservation" />
 		<meta name="keywords" content="Figuiès, Figuies, gîte, gite, maison, location, Aveyron, Salle-la-Source"/>
 		<meta name="author" content="Gîte Figuiès" />
 		<meta name="copyright" content="Gîte Figuiès" />
@@ -113,7 +113,7 @@ if(isset($_POST['submit'])) {
 
             <section>
 
-                <h2>Formulaire de contact</h2>
+                <h2>Formulaire de réservation</h2>
 
                 <p>
 
