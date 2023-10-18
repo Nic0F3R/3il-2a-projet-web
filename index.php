@@ -13,6 +13,7 @@ ini_set('display_errors', 1);
         <title>Gîte Figuiès</title>
         <meta charset="UTF-8" />
         <link rel="stylesheet" href="style/style.css" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
     </head>
     <body>
 
@@ -188,6 +189,25 @@ ini_set('display_errors', 1);
                     Ouverture à partir du 01/04/2023 jusqu'au 30/10/2023
                 </p>
 
+                <br /><hr />
+
+                <h3>Localisation</h3>
+
+                <p>
+                    
+                    Figuiès<br />
+                    Vous pouvez nous trouver à l'adresse suivante :<br />
+                    140 rue de Figuiès<br />
+                    12330 Salles-la-Source<br /><br />
+
+                    Carte : <br /><br />
+
+                    <div id="map">
+
+                    </div>
+                    
+                </p>
+
                 <br /><br />
 
             </section>
@@ -196,6 +216,8 @@ ini_set('display_errors', 1);
         <?php
             include "assets/footer.html";
         ?>
+
+        <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
 
         <script>
 
@@ -253,6 +275,33 @@ ini_set('display_errors', 1);
             showSlide(currentIndex);
 
             // ---- FIN CARROUSEL ---- //
+
+            // ---- CARTE ---- //
+
+            var lat = 44.449083;
+            var lon = 2.493333;
+            
+            var macarte = null;
+            
+            function initMap() {
+
+                macarte = L.map('map').setView([lat, lon], 11);
+                
+                L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                    attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+                    minZoom: 1,
+                    maxZoom: 20
+                }).addTo(macarte);
+				
+				var marker = L.marker([lat, lon]).addTo(macarte);
+
+            }
+
+            window.onload = function() {
+		        initMap(); 
+            };
+
+            // ---- FIN CARTE ---- //
 
         </script>
 

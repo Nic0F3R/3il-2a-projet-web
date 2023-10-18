@@ -294,3 +294,10 @@ footer {
     margin-left: 10px;
 }
 /* ---- FIN MESSAGERIE ---- */
+
+
+/* ---- CARTE ---- */
+#map {
+    height: 400px;
+}
+/* ---- FIN CARTE ---- */
