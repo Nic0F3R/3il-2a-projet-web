@@ -24,52 +24,63 @@ if(isset($_POST['submit'])) {
 
             if(!empty($_POST['email']) && strlen($_POST['email']) < 100) {
 
-                if(!empty($_POST['objet']) && strlen($_POST['objet']) < 100) {
+                if(!empty($_POST['telephone']) && strlen($_POST['telephone']) >= 10 && strlen($_POST['telephone']) <= 14) {
 
-                    if(!empty($_POST['message'])) {
+                    if(!empty($_POST['date_debut']) && !empty($_POST['date_fin'])) {
     
-                        if(strlen($_POST['message']) > 20  && strlen($_POST['message']) < 2000) {
-    
-                            $nom = htmlspecialchars($_POST['nom']);
-                            $prenom = htmlspecialchars($_POST['prenom']);
-                            $email = htmlspecialchars($_POST['email']);
-                            $objet = htmlspecialchars($_POST['objet']);
-                            $message = htmlspecialchars($_POST['message']);
-    
-                            $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
+                        if(preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $_POST['date_debut']) && preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $_POST['date_fin'])) {
 
-                            try {
+                            if(strlen($_POST['message']) < 2000) {
+        
 
-                                $pdo = new PDO($dsn, $user, $password);
+                                $nom = htmlspecialchars($_POST['nom']);
+                                $prenom = htmlspecialchars($_POST['prenom']);
+                                $email = htmlspecialchars($_POST['email']);
+                                $telephone = htmlspecialchars($_POST['telephone']);
+                                $dateDebut = htmlspecialchars($_POST['date_debut']);
+                                $dateFin = htmlspecialchars($_POST['date_fin']);
+                                $message = htmlspecialchars($_POST['message']);
+        
+                                $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
+
+                                try {
+
+                                    $pdo = new PDO($dsn, $user, $password);
                 
-                                $req = "INSERT INTO Message (nom, prenom, email, objet, message) VALUES (:nom, :prenom, :email, :objet, :message);";
-                
-                                $res = $pdo->prepare($req);
-    
-                                $res->bindParam(':nom', $nom);
-                                $res->bindParam(':prenom', $prenom);
-                                $res->bindParam(':email', $email);
-                                $res->bindParam(':objet', $objet);
-                                $res->bindParam(':message', $message);
+                                    $req = "INSERT INTO Reservations (nom, prenom, email, telephone, date_debut, date_fin, message) VALUES (:nom, :prenom, :email, :telephone, :date_debut, :date_fin, :message);";
+                    
+                                    $res = $pdo->prepare($req);
+        
+                                    $res->bindParam(':nom', $nom);
+                                    $res->bindParam(':prenom', $prenom);
+                                    $res->bindParam(':email', $email);
+                                    $res->bindParam(':telephone', $telephone);
+                                    $res->bindParam(':date_debut', $dateDebut);
+                                    $res->bindParam(':date_fin', $dateFin);
+                                    $res->bindParam(':message', $message);
 
-                                $res->execute();
+                                    $res->execute();
 
-                                $msgOK = "Votre message a été envoyée. Vous recevrez une réponse par mail";
-                
-                            } catch (PDOException $e) {
-                                $erreur = "Erreur lors de l'envoi du message";
+                                    $msgOK = "Votre demande de réservation a été envoyée. Vous recevrez une acceptation ou refus par mail et/ou téléphone";
+                    
+                                } catch (PDOException $e) {
+                                    $erreur = "Erreur lors de l'envoi du message";
+                                }
+
+                            } else {
+                                $erreur = "Le message est trop long (> 2000 caractères)";
                             }
 
                         } else {
-                            $erreur = "Veuillez saisir un message cohérent";
+                            $erreur = "Les dates de réservations doivent être cohérentes ";
                         }
     
                     } else {
-                        $erreur = "Le contenu du message est obligatoire";
+                        $erreur = "Les dates de début et de fin de résevration sont obligatoires";
                     }
     
                 } else {
-                    $erreur = "L'objet du message est obligatoire";
+                    $erreur = "Le numéro de téléphone est obligatoire";
                 }
 
             } else {
@@ -120,6 +131,9 @@ if(isset($_POST['submit'])) {
                 <p>
                     Pour les utilisateurs utilisant un <strong>ordinateur</strong>, cliquez sur la case correspondant à la date de début de réservation, puis <strong>déplacez le curseur</strong> en <strong>maintenant le clic</strong> de la souris jusqu'à la date de fin de réservation. <em>La durée sélectionnée sera en surbrillance.</em><br /><br />
                     Pour les utilisateurs utilisant un <strong>téléphone mobile</strong>, touchez la case correspondant à la première date et <strong>maintenez votre doigt</strong> pendant <strong>quelques secondes</strong>, et déplacez votre doigt vers la date de fin. <em>La durée sélectionnée sera en surbrillance.</em><br /><br />
+                    
+                    Le <strong>formulaire</strong> de réservation est <strong>en bas</strong> de la page.<br /><br />
+                    
                     <div id='calendar'></div>
                 </p>
 
@@ -139,12 +153,18 @@ if(isset($_POST['submit'])) {
                         <label for="email">E-Mail :</label><br />
                         <input type="text" name="email"><br /><br />
 
-                        <!--<label for="objet">Objet :</label><br />
-                        <input type="text" name="objet"><br /><br />
+                        <label for="telephone">Téléphone :</label><br />
+                        <input type="text" name="telephone"><br /><br />
 
-                        <label for="message">Message :</label><br />
+                        <label for="date_debut">Date de début de réservation (à sélectionner sur le calendrier) :</label><br />
+                        <input type="text" id="date_debut" name="date_debut" readonly><br /><br />
+
+                        <label for="date_fin">Date de fin de réservation (à sélectionner sur le calendrier) :</label><br />
+                        <input type="text" id="date_fin" name="date_fin" readonly><br /><br />
+
+                        <label for="message">Message (facultatif) :</label><br />
                         <textarea name="message" rows="10" cols="50"></textarea><br /><br />
-                        -->
+                        
                         <input type="submit" name="submit" value="Envoyer"><br /><br />
                     </form>
 
@@ -186,19 +206,32 @@ if(isset($_POST['submit'])) {
 
             // ---- GESTION CALENDRIER ---- //
             document.addEventListener('DOMContentLoaded', function() {
+                
                 var calendarEl = document.getElementById('calendar');
 
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     initialView: 'dayGridMonth',
+                    locale: 'fr',
                     selectable: true,
                     select: function(info) {
+
                         var date_debut = info.startStr;
                         var date_fin = info.endStr;
 
-                        /*
+                        var date_finDate = new Date(date_fin);
+
+                        date_finDate.setDate(date_finDate.getDate() - 1);
+
+                        // Obtenez la nouvelle date sous forme de chaîne de caractères au format ISO (AAAA-MM-JJ)
+                        date_fin = date_finDate.toISOString().split('T')[0];
+
                         if (date_debut && date_fin) {
+
+                            document.getElementById('date_debut').value = date_debut;
+                            document.getElementById('date_fin').value = date_fin;
+
                             // Envoyer les données au serveur via la Fetch API
-                            fetch('enregistrer_date.php', {
+                            /*fetch('enregistrer_date.php', {
                                 method: 'POST',
                                 body: JSON.stringify({ date_debut, date_fin }),
                                 headers: {
@@ -213,15 +246,15 @@ if(isset($_POST['submit'])) {
                                 } else {
                                     alert('Erreur lors de l\'enregistrement.');
                                 }
-                            });
-                        }*/
+                            });*/
+                        }
+
                     }
                 });
 
                 calendar.render();
+
             });
-
-
             // ---- FIN GESTION CALENDRIER ---- //
 
 
