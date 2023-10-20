@@ -14,7 +14,7 @@ ini_set('display_errors', 1);
         <meta charset="UTF-8" />
 
         <meta name="description" content="Gîte Figuiès - Magnifique maison en pierre, située en Aveyron à Salle-la-Source, sur les hauteurs, entre vignes, falaises et le causse, possédant une vue magnifique et un environnement agréable. Disponible à la location toute l'année" />
-		<meta name="keywords" content="Figuiès, Figuies, gîte, gite, maison, location, Aveyron, Salle-la-Source"/>
+		<meta name="keywords" content="Figuiès, Figuies, gîte, gite, maison, location, réserver, réservation, Aveyron, Salle-la-Source"/>
 		<meta name="author" content="Gîte Figuiès" />
 		<meta name="copyright" content="Gîte Figuiès" />
 
@@ -201,12 +201,12 @@ ini_set('display_errors', 1);
 
                 <p>
                     
-                    Figuiès<br />
-                    Vous pouvez nous trouver à l'adresse suivante :<br />
+                    Vous pouvez nous trouver à l'adresse suivante :<br /><br />
+                    <strong>Figuiès</strong><br />
                     140 rue de Figuiès<br />
                     12330 Salles-la-Source<br /><br />
 
-                    Carte : <br /><br />
+                    Ci-dessous notre localisation précise sur la carte : <br /><br />
 
                     <div id="map">
 
@@ -261,7 +261,7 @@ ini_set('display_errors', 1);
 
             function nextSlide() {
                 currentIndex++;
-                if (currentIndex >= slides.length) {
+                if(currentIndex >= slides.length) {
                     currentIndex = 0;
                 }
                 showSlide(currentIndex);
@@ -283,7 +283,6 @@ ini_set('display_errors', 1);
             // ---- FIN CARROUSEL ---- //
 
             // ---- CARTE ---- //
-
             var lat = 44.449083;
             var lon = 2.493333;
 

@@ -95,11 +95,13 @@ if(isset($_POST['submit'])) {
         <meta charset="UTF-8" />
 
         <meta name="description" content="Gîte Figuiès - Calendrier et Formulaire de Réservation" />
-		<meta name="keywords" content="Figuiès, Figuies, gîte, gite, maison, location, Aveyron, Salle-la-Source"/>
+		<meta name="keywords" content="Figuiès, Figuies, gîte, gite, maison, location, réserver, réservation, Aveyron, Salle-la-Source"/>
 		<meta name="author" content="Gîte Figuiès" />
 		<meta name="copyright" content="Gîte Figuiès" />
 
         <link rel="stylesheet" href="style/style.css" />
+
+        <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
     </head>
     <body>
 
@@ -112,6 +114,16 @@ if(isset($_POST['submit'])) {
         <main>
 
             <section>
+
+                <h2>Calendrier des disponibilités</h2>
+
+                <p>
+                    Pour les utilisateurs utilisant un <strong>ordinateur</strong>, cliquez sur la case correspondant à la date de début de réservation, puis <strong>déplacez le curseur</strong> en <strong>maintenant le clic</strong> de la souris jusqu'à la date de fin de réservation. <em>La durée sélectionnée sera en surbrillance.</em><br /><br />
+                    Pour les utilisateurs utilisant un <strong>téléphone mobile</strong>, touchez la case correspondant à la première date et <strong>maintenez votre doigt</strong> pendant <strong>quelques secondes</strong>, et déplacez votre doigt vers la date de fin. <em>La durée sélectionnée sera en surbrillance.</em><br /><br />
+                    <div id='calendar'></div>
+                </p>
+
+                <br /><hr />
 
                 <h2>Formulaire de réservation</h2>
 
@@ -127,12 +139,12 @@ if(isset($_POST['submit'])) {
                         <label for="email">E-Mail :</label><br />
                         <input type="text" name="email"><br /><br />
 
-                        <label for="objet">Objet :</label><br />
+                        <!--<label for="objet">Objet :</label><br />
                         <input type="text" name="objet"><br /><br />
 
                         <label for="message">Message :</label><br />
                         <textarea name="message" rows="10" cols="50"></textarea><br /><br />
-
+                        -->
                         <input type="submit" name="submit" value="Envoyer"><br /><br />
                     </form>
 
@@ -171,6 +183,47 @@ if(isset($_POST['submit'])) {
                 
             });
             // ---- FIN MENU RESPONSIVE ---- //
+
+            // ---- GESTION CALENDRIER ---- //
+            document.addEventListener('DOMContentLoaded', function() {
+                var calendarEl = document.getElementById('calendar');
+
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    selectable: true,
+                    select: function(info) {
+                        var date_debut = info.startStr;
+                        var date_fin = info.endStr;
+
+                        /*
+                        if (date_debut && date_fin) {
+                            // Envoyer les données au serveur via la Fetch API
+                            fetch('enregistrer_date.php', {
+                                method: 'POST',
+                                body: JSON.stringify({ date_debut, date_fin }),
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
+                            })
+                            .then(response => response.text())
+                            .then(data => {
+                                if (data === 'success') {
+                                    // Actualisez le calendrier ou effectuez d'autres actions nécessaires.
+                                    calendar.refetchEvents();
+                                } else {
+                                    alert('Erreur lors de l\'enregistrement.');
+                                }
+                            });
+                        }*/
+                    }
+                });
+
+                calendar.render();
+            });
+
+
+            // ---- FIN GESTION CALENDRIER ---- //
+
 
         </script>
 

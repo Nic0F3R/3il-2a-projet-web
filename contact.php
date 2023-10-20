@@ -95,7 +95,7 @@ if(isset($_POST['submit'])) {
         <meta charset="UTF-8" />
 
         <meta name="description" content="Gîte Figuiès - Formulaire de Contact" />
-		<meta name="keywords" content="Figuiès, Figuies, gîte, gite, maison, location, Aveyron, Salle-la-Source"/>
+		<meta name="keywords" content="Figuiès, Figuies, gîte, gite, maison, location, réserver, réservation, Aveyron, Salle-la-Source"/>
 		<meta name="author" content="Gîte Figuiès" />
 		<meta name="copyright" content="Gîte Figuiès" />
 
