@@ -104,11 +104,15 @@ if(isset($_POST['submit'])) {
                 <p>
 
                     <form action="" method="POST">
-                        <label for="login">Identifiant :</label>
-                        <input type="text" name="login"><br />
+                        <div class="form-group">
+                            <label for="login">Identifiant :</label>
+                            <input type="text" name="login"><br />
+                        </div>
 
-                        <label for="mdp">Mot de passe :</label>
-                        <input type="password" name="mdp"><br /><br />
+                        <div class="form-group">
+                            <label for="mdp">Mot de passe :</label>
+                            <input type="password" name="mdp"><br /><br />
+                        </div>
 
                         <input type="submit" name="submit" value="Connexion"><br /><br />
                     </form>
