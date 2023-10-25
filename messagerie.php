@@ -73,7 +73,6 @@ $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
 
 
                         } catch(PDOException $e) {
-
                             echo "<strong><font color='red'>Erreur lors de la réception des messages</font></strong>";
                         }
                     ?>
