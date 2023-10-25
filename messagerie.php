@@ -11,8 +11,6 @@ if($_SESSION['isAdmin'] != true) {
 
 include "db/config.php";
 
-$erreur = "";
-
 $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
 
 ?>
@@ -23,6 +21,7 @@ $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
         <title>Gîte Figuiès - Messagerie</title>
         <meta charset="UTF-8" />
         <link rel="stylesheet" href="style/style.css" />
+        <link rel="icon" href="images/favicon.ico" />
     </head>
     <body>
 
@@ -51,11 +50,9 @@ $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
 
                             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                            if (count($res) > 0) {
+                            if(count($res) > 0) {
 
-                                foreach ($res as $row) {
-
-                                    //echo 'test';
+                                foreach($res as $row) {
 
                                     echo '<div class="container-message-btn">
                                             <div class="message" id="' . $row['id'] . '">
@@ -69,8 +66,6 @@ $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
                             } else {
                                 echo "Aucun message à afficher";
                             }
-
-
 
                         } catch(PDOException $e) {
                             echo "<strong><font color='red'>Erreur lors de la réception des messages</font></strong>";
@@ -114,16 +109,14 @@ $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
                 bouton.addEventListener('click', function() {
 
                     var btnSupprId = bouton.id;
-
-                    console.log('ici');
                 
                     var xhr = new XMLHttpRequest();
                     xhr.open("POST", "supprimerMessage.php", true);
                     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                     
                     xhr.onreadystatechange = function() {
-                        if (xhr.readyState === 4) {
-                            if (xhr.status === 200) {
+                        if(xhr.readyState === 4) {
+                            if(xhr.status === 200) {
                                 // Message supprimé
                                 window.location.href = window.location.href;
                             }

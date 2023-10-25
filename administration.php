@@ -64,6 +64,7 @@ if(isset($_POST['submit'])) {
         <title>Gîte Figuiès - Administration</title>
         <meta charset="UTF-8" />
         <link rel="stylesheet" href="style/style.css" />
+        <link rel="icon" href="images/favicon.ico" />
     </head>
     <body>
 

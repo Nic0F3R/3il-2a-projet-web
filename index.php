@@ -19,6 +19,7 @@ ini_set('display_errors', 1);
 		<meta name="copyright" content="Gîte Figuiès" />
 
         <link rel="stylesheet" href="style/style.css" />
+        <link rel="icon" href="images/favicon.ico" />
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
     </head>
     <body>

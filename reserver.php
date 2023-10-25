@@ -122,6 +122,7 @@ if(isset($_POST['submit'])) {
 		<meta name="copyright" content="Gîte Figuiès" />
 
         <link rel="stylesheet" href="style/style.css" />
+        <link rel="icon" href="images/favicon.ico" />
 
         <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
     </head>
