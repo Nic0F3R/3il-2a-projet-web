@@ -56,7 +56,7 @@ $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
 
                                     echo '<div class="container-message-btn">
                                             <div class="message" id="' . $row['id'] . '">
-                                                <strong>Expéditeur :</strong> ' . $row['nom'] . ' ' . $row['prenom'] . ' - ' . $row['email'] . '<br /><br /><strong>Message</strong> :<br />' . $row['message'] .
+                                                <strong>Expéditeur :</strong> ' . $row['nom'] . ' ' . $row['prenom'] . ' - ' . $row['email'] . '<br /><br /><strong>Objet : </strong>' . $row['objet'] . '<br /><br /><strong>Message</strong> :<br />' . $row['message'] .
                                             '</div>
                                             <button type="button" class="btn-supprimer-message" id="' . $row['id'] . '">X</button>
                                           </div><hr /><br />';
