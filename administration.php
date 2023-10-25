@@ -2,6 +2,9 @@
 
 session_start();
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if($_SESSION['isAdmin']) {
     header('Location:index.php');
 }
@@ -19,6 +22,8 @@ if(isset($_POST['submit'])) {
             $login = htmlspecialchars(htmlentities($_POST['login']));
             $mdp = htmlspecialchars(htmlentities($_POST['mdp']));
 
+            $salt = "Gr@in2Sel";
+            $mdpChiffre = password_hash($mdp . $salt, PASSWORD_BCRYPT);
 
             $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
 
@@ -26,13 +31,29 @@ if(isset($_POST['submit'])) {
 
                 $pdo = new PDO($dsn, $user, $password);
 
-                $req = "SELECT * FROM ComptesAdmin WHERE login='" . $login . "' AND mdp='" . $mdp . "';";
+                $req = "SELECT * FROM ComptesAdmin WHERE login=:login";
 
-                $res = $pdo->query($req);
+                $stmt = $pdo->prepare($req);
 
-                $nbComptesAdmin = $res->fetchColumn();
+                $stmt->bindParam(':login', $login);
 
-                if($nbComptesAdmin == 1) {
+                $stmt->execute();
+                $user = $stmt->fetch();
+
+                if($user && password_verify($mdp . $salt, $user['mdp'])) {
+                   
+                    $_SESSION['isAdmin'] = true;
+
+                    header('Location:index.php');
+
+                } else {
+                    $erreur = "Identifiant et/ou mot de passe incorrect(s)";
+                }
+
+                /*
+                $rowCount = $stmt->rowCount();
+
+                if($rowCount == 1) {
 
                     $_SESSION['isAdmin'] = true;
 
@@ -41,9 +62,10 @@ if(isset($_POST['submit'])) {
                 } else {
                     $erreur = "Identifiant et/ou mot de passe incorrect(s)";
                 }
+                */
                 
             } catch (PDOException $e) {
-                $erreur = "Erreur de connexion. Veuillez contacter le webmaster";
+                $erreur = "Erreur de connexion. Veuillez contacter le webmaster " . $e;
             }
             
         } else {

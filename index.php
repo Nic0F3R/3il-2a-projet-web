@@ -38,7 +38,6 @@ ini_set('display_errors', 1);
 
                 <p>
                     Notre maison en pierre, située sur les hauteurs, entre vignes, falaises et le causse vous séduira par sa vue magnifique et son environnement agréable.
-
                 </p>
 
                 <br /><br />
@@ -57,7 +56,7 @@ ini_set('display_errors', 1);
 
                                 // Filtre les images avec une regex
                                 if(preg_match("#\.(jpg|jpeg|png|gif|bmp|tif)$#", strtolower($fichier))) {
-                                    $baliseImage = "<div class='carousel-slide'><div class='image-container'><img src='images/carrousel/$fichier' alt='Image du gîte Figuiès'></div></div>";
+                                    $baliseImage = "<div class='carousel-slide'><div class='image-container'><img src='images/carrousel/$fichier' alt='Image du gîte Figuiès' srcset='images/carrousel/w400-$fichier w400, images/carrousel/w600-$fichier w600, images/carrousel/$fichier w900' sizes='(max-width: 320px) 280px, (max-width: 640px) 600px, 1000px'  loading='lazy' width='600' height='400'></div></div>";
                                     echo $baliseImage;
                                 }
 
