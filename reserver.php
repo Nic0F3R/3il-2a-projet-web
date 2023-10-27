@@ -238,27 +238,8 @@ if(isset($_POST['submit'])) {
                         date_fin = date_finDate.toISOString().split('T')[0];
 
                         if (date_debut && date_fin) {
-
                             document.getElementById('date_debut').value = date_debut;
                             document.getElementById('date_fin').value = date_fin;
-
-                            // Envoyer les données au serveur via la Fetch API
-                            /*fetch('enregistrer_date.php', {
-                                method: 'POST',
-                                body: JSON.stringify({ date_debut, date_fin }),
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                }
-                            })
-                            .then(response => response.text())
-                            .then(data => {
-                                if (data === 'success') {
-                                    // Actualisez le calendrier ou effectuez d'autres actions nécessaires.
-                                    calendar.refetchEvents();
-                                } else {
-                                    alert('Erreur lors de l\'enregistrement.');
-                                }
-                            });*/
                         }
 
                     }
