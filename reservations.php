@@ -43,7 +43,7 @@ $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
 
                     <hr />
                     <br />
-                    
+
                     <?php
 
                         try {
@@ -117,6 +117,7 @@ $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     initialView: 'dayGridMonth',
                     locale: 'fr',
+                    events: 'getIntervallesDates.php',
                     selectable: true,
                     select: function(info) {
 

@@ -224,6 +224,7 @@ if(isset($_POST['submit'])) {
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     initialView: 'dayGridMonth',
                     locale: 'fr',
+                    events: 'getIntervallesDates.php',
                     selectable: true,
                     select: function(info) {
 
