@@ -238,12 +238,13 @@ if(isset($_POST['submit'])) {
                         // Obtenez la nouvelle date sous forme de chaîne de caractères au format ISO (AAAA-MM-JJ)
                         date_fin = date_finDate.toISOString().split('T')[0];
 
-                        if (date_debut && date_fin) {
+                        if(date_debut && date_fin) {
                             document.getElementById('date_debut').value = date_debut;
                             document.getElementById('date_fin').value = date_fin;
                         }
 
                     }
+
                 });
 
                 calendar.render();

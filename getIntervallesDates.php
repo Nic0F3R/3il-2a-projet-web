@@ -20,7 +20,7 @@ try {
         foreach($res1 as $row) {
 
             $intervalles[] = array(
-                'title' => 'Réservation',
+                'title' => 'Réservé',
                 'start' => $row['date_debut'],
                 'end' => $row['date_fin']
             );
