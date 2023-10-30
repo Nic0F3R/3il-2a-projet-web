@@ -103,7 +103,7 @@ $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
                         try {
 
                             $pdo = new PDO($dsn, $user, $password);
-                            $req1 = "SELECT * FROM ReservationsAcceptees ORDER BY id DESC;";
+                            $req1 = "SELECT * FROM ReservationsAcceptees WHERE date_debut >= CURDATE() ORDER BY id DESC;";
 
                             $stmt = $pdo->prepare($req1);
                             $stmt->execute();
