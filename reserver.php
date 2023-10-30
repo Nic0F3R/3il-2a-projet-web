@@ -35,47 +35,100 @@ if(isset($_POST['submit'])) {
                             
                             $today = new DateTime();
 
+                            // Si la date sélectionnée est bien dans le futur
                             if($dateDebutTest >= $today && $dateFinTest >= $today) {
 
-                                if(strlen($_POST['message']) < 2000) {
-            
+                                // Si la date sélectionnée n'est pas déjà réservée
 
-                                    $nom = htmlspecialchars($_POST['nom']);
-                                    $prenom = htmlspecialchars($_POST['prenom']);
-                                    $email = htmlspecialchars($_POST['email']);
-                                    $telephone = htmlspecialchars($_POST['telephone']);
-                                    $dateDebut = htmlspecialchars($_POST['date_debut']);
-                                    $dateFin = htmlspecialchars($_POST['date_fin']);
-                                    $message = htmlspecialchars($_POST['message']);
-            
+                                $dateDejaReservee = false;
+
+                                try {
+
                                     $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
 
-                                    try {
+                                    $pdo = new PDO($dsn, $user, $password);
+                                    $req = "SELECT date_debut, date_fin FROM ReservationsAcceptees;";
 
-                                        $pdo = new PDO($dsn, $user, $password);
-                    
-                                        $req = "INSERT INTO Reservations (nom, prenom, email, telephone, date_debut, date_fin, message) VALUES (:nom, :prenom, :email, :telephone, :date_debut, :date_fin, :message);";
+                                    $stmt = $pdo->prepare($req);
+                                    $stmt->execute();
+
+                                    $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                                    if(count($res) > 0) {
+
+                                        foreach($res as $row) {
+
+                                            if( (
+                                                date('Y-m-d', strtotime($_POST['date_debut'])) >= $row['date_debut'] &&
+                                                date('Y-m-d', strtotime($_POST['date_debut'])) <= $row['date_fin']
+                                                )
+                                                
+                                                || 
+                                                
+                                                (
+                                                date('Y-m-d', strtotime($_POST['date_fin'])) >= $row['date_debut'] &&
+                                                date('Y-m-d', strtotime($_POST['date_fin'])) <= $row['date_fin']
+                                                )
+                                                
+                                              ) {
+
+                                                    $dateDejaReservee = true;
+
+                                            }
+                                    
+                                        }
+                                
+                                    }
+
+                                } catch(PDOException $e) {
+                                    $erreur = "Erreur lors de l'envoi de la réservation";
+                                }
+
+                                if(!$dateDejaReservee) {
+                                    
+                                    if(strlen($_POST['message']) < 2000) {
+                
+
+                                        $nom = htmlspecialchars($_POST['nom']);
+                                        $prenom = htmlspecialchars($_POST['prenom']);
+                                        $email = htmlspecialchars($_POST['email']);
+                                        $telephone = htmlspecialchars($_POST['telephone']);
+                                        $dateDebut = htmlspecialchars($_POST['date_debut']);
+                                        $dateFin = htmlspecialchars($_POST['date_fin']);
+                                        $message = htmlspecialchars($_POST['message']);
+                
+                                        $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
+
+                                        try {
+
+                                            $pdo = new PDO($dsn, $user, $password);
                         
-                                        $res = $pdo->prepare($req);
-            
-                                        $res->bindParam(':nom', $nom);
-                                        $res->bindParam(':prenom', $prenom);
-                                        $res->bindParam(':email', $email);
-                                        $res->bindParam(':telephone', $telephone);
-                                        $res->bindParam(':date_debut', $dateDebut);
-                                        $res->bindParam(':date_fin', $dateFin);
-                                        $res->bindParam(':message', $message);
+                                            $req = "INSERT INTO Reservations (nom, prenom, email, telephone, date_debut, date_fin, message) VALUES (:nom, :prenom, :email, :telephone, :date_debut, :date_fin, :message);";
+                            
+                                            $res = $pdo->prepare($req);
+                
+                                            $res->bindParam(':nom', $nom);
+                                            $res->bindParam(':prenom', $prenom);
+                                            $res->bindParam(':email', $email);
+                                            $res->bindParam(':telephone', $telephone);
+                                            $res->bindParam(':date_debut', $dateDebut);
+                                            $res->bindParam(':date_fin', $dateFin);
+                                            $res->bindParam(':message', $message);
 
-                                        $res->execute();
+                                            $res->execute();
 
-                                        $msgOK = "Votre demande de réservation a été envoyée. Vous recevrez une acceptation ou refus par mail et/ou téléphone";
-                        
-                                    } catch (PDOException $e) {
-                                        $erreur = "Erreur lors de l'envoi du message";
+                                            $msgOK = "Votre demande de réservation a été envoyée. Vous recevrez une acceptation ou refus par mail et/ou téléphone";
+                            
+                                        } catch (PDOException $e) {
+                                            $erreur = "Erreur lors de l'envoi de la réservation";
+                                        }
+
+                                    } else {
+                                        $erreur = "Le message est trop long (> 2000 caractères)";
                                     }
 
                                 } else {
-                                    $erreur = "Le message est trop long (> 2000 caractères)";
+                                    $erreur = "Les dates sélectionnées ont déjà été réservées";
                                 }
 
                             } else {
@@ -251,7 +304,6 @@ if(isset($_POST['submit'])) {
 
             });
             // ---- FIN GESTION CALENDRIER ---- //
-
 
         </script>
 

@@ -41,8 +41,14 @@ $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
 
                     <div id='calendar'></div>
 
-                    <hr />
-                    <br />
+                </p>
+
+                <hr />
+                <br />
+
+                <h3>Réservations en cours</h3>
+
+                <p>
 
                     <?php
 
@@ -66,7 +72,11 @@ $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
                                             '</div>
                                             <button type="button" class="btn-supprimer-reserv" id="' . $row['id'] . '">X</button>
                                             <button type="button" class="btn-accepter-reserv" id="' . $row['id'] . '">✓</button>
-                                        </div><hr /><br />';
+                                        </div>
+                                        <div style="width: 600px">
+                                            <hr />
+                                        </div>
+                                        <br />';
                             
                                 }
 
@@ -82,7 +92,53 @@ $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
 
                 </p>
 
+                <br /><hr />
+
+                <h3>Réservations acceptées (actuelles ou à venir)</h3>
+
+                <p>
+
+                    <?php
+
+                        try {
+
+                            $pdo = new PDO($dsn, $user, $password);
+                            $req1 = "SELECT * FROM ReservationsAcceptees ORDER BY id DESC;";
+
+                            $stmt = $pdo->prepare($req1);
+                            $stmt->execute();
+
+                            $res1 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                            if(count($res1) > 0) {
+
+                                foreach($res1 as $row) {
+
+                                    echo '
+                                            <div class="reserv" id="' . $row['id'] . '">
+                                                <strong>De :</strong> ' . $row['nom'] . ' ' . $row['prenom'] . ' - ' . $row['email'] . ' - ' . $row['telephone'] . '<br /><br /><strong>Du </strong>' . $row['date_debut'] . ' <strong>au</strong> ' . $row['date_fin'] .
+                                            '</div>
+                                        
+                                        <div style="width: 600px">
+                                            <hr />
+                                        </div>
+                                        <br />';
+                            
+                                }
+
+                            } else {
+                                echo "Aucune réservation à afficher";
+                            }
+
+                        } catch(PDOException $e) {
+                            echo "<strong><font color='red'>Erreur lors de la réception des messages</font></strong>";
+                        }
+
+                    ?>
+                </p>
+
                 <br /><br />
+
 
             </section>
         </main>

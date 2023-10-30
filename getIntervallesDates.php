@@ -19,10 +19,13 @@ try {
 
         foreach($res1 as $row) {
 
+            $dateFin = new DateTime($row['date_fin']);
+            $dateFin->modify('+1 day');
+
             $intervalles[] = array(
                 'title' => 'Réservé',
                 'start' => $row['date_debut'],
-                'end' => $row['date_fin']
+                'end' => $dateFin->format('Y-m-d')
             );
     
         }
