@@ -1,7 +1,7 @@
 <?php
 
 $host = 'localhost';
-$db = 'GiteFiguies';
+$db = 'GiteFiguies1';
 $user = 'root';
 $password = '';
 
