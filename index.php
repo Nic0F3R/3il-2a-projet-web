@@ -62,28 +62,7 @@ ini_set('display_errors', 1);
 
                             }
 
-
                         ?>
-
-                        <!--
-                        <div class="carousel-slide">
-                            <div class="image-container">
-                                <img src="images/carrousel/figuies-1.jpg" alt="Image du gîte Figuiès">
-                            </div>
-                        </div>
-
-                        <div class="carousel-slide">
-                            <div class="image-container">
-                                <img src="images/carrousel/figuies-2.jpg" alt="Image du gîte Figuiès">
-                            </div>
-                        </div>
-
-                        <div class="carousel-slide">
-                            <div class="image-container">
-                                <img src="images/carrousel/figuies-3.jpg" alt="Image du gîte Figuiès">
-                            </div>
-                        </div>
-                        -->
 
                         <button id="prevBtn" class="carousel-button">&lt;</button>
 
