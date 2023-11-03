@@ -1,7 +1,9 @@
 <?php
 
+/*
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+*/
 
 include "db/config.php";
 $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
